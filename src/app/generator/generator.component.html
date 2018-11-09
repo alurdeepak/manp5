@@ -1,0 +1,128 @@
+<app-header></app-header>
+
+<div class="container"><br>
+  <h2>Generator Panel</h2><br>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <form  #formDetails="ngForm" >
+
+        <input type="text" class="form-control"  *ngIf="flag" [(ngModel)]="generator_val[0].id" id="id" name="id" >
+       <!-- <input type="text" class="form-control"  *ngIf="!flag" [(ngModel)]="id" id="id" name="id" >-->
+        <div class="form-group" >
+          <label for="make">Make</label>
+          <input type="text" class="form-control"   *ngIf="!flag" [(ngModel)]="make" id="make"  name="make">
+          <input type="text" class="form-control"   *ngIf="flag" [(ngModel)]="generator_val[0].make" id="make"  name="make"  >
+        </div>
+
+        <div class="form-group">
+          <label for="sr_no">Sr Num</label>
+          <input type="text" class="form-control" *ngIf="flag" [(ngModel)]="generator_val[0].sr_no" id="sr_no" name="sr_no" >
+          <input type="text" class="form-control" *ngIf="!flag" [(ngModel)]="sr_no" id="sr_no" name="sr_no" >
+        </div>
+
+        <div class="form-group">
+          <label for="generator_slipring_sr_number">Slipring Sr Num</label>
+          <input type="text" class="form-control" *ngIf="flag" [(ngModel)]="generator_val[0].generator_slipring_sr_number" id="generator_slipring_sr_number" name="generator_slipring_sr_number" >
+          <input type="text" class="form-control" *ngIf="!flag" [(ngModel)]="generator_slipring_sr_number" id="generator_slipring_sr_number" name="generator_slipring_sr_number" >
+
+        </div>
+
+        <div class="form-group">
+          <label for="generator_cooling_fan1_sr_no">Cooling Fan1 Sr Num</label>
+          <input type="text" class="form-control" *ngIf="flag" [(ngModel)]="generator_val[0].generator_cooling_fan1_sr_no" id="generator_cooling_fan1_sr_no" name="generator_cooling_fan1_sr_no" >
+          <input type="text" class="form-control" *ngIf="!flag" [(ngModel)]="generator_cooling_fan1_sr_no" id="generator_cooling_fan1_sr_no" name="generator_cooling_fan1_sr_no" >
+        </div>
+
+        <div class="form-group">
+          <label for="generator_slipring_cooling_fan_sr_no">Slipring Cooling Fan Sr Num</label>
+          <input type="text" class="form-control" *ngIf="flag" [(ngModel)]="generator_val[0].generator_slipring_cooling_fan_sr_no"  id="generator_slipring_cooling_fan_sr_no" name="generator_slipring_cooling_fan_sr_no" >
+          <input type="text" class="form-control" *ngIf="!flag" [(ngModel)]="generator_slipring_cooling_fan_sr_no"  id="generator_slipring_cooling_fan_sr_no" name="generator_slipring_cooling_fan_sr_no" >
+        </div>
+
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select class="form-control" [(ngModel)]="status" name="status" id ="status">
+
+
+            <ng-container *ngIf="flag">
+            <ng-container *ngFor="let statusList of status">
+
+
+              <ng-container *ngIf="statusList.id === generator_val[0].status_id_fk; else theUnselectedItem">
+
+                <option  selected="{{statusList.id}} === {{generator_val[0].status_id_fk}}}"> {{statusList.sname}}</option>
+
+              </ng-container>
+
+              <ng-template #theUnselectedItem>
+                <option  value={{statusList.id}}>{{ statusList.sname }}</option>
+              </ng-template>
+            </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="!flag">
+              <ng-container *ngFor="let statusList of status">
+
+
+
+                  <option value={{statusList.id}} > {{statusList.sname}}</option>
+
+
+
+              </ng-container>
+            </ng-container>
+
+         </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn float-right" (click)="onAddPost(formDetails)" *ngIf="!flag">Submit</button>
+
+
+
+        <button type="submit" class="btn btn-danger btn float-right" (click)="updateGenerator(formDetails)" *ngIf="flag">Update</button>
+   
+      </form>
+      <br>
+
+    </div>
+    <div class="col-2"></div>
+  </div>
+  <hr>
+  <div >
+  <div class="row"   >
+    <div class="col-1"></div>
+    <div class="col-10">
+      <h2>Equipment History</h2>
+      <hr>
+      <h4>Generator</h4>
+      <table class="table table-striped">
+
+        <tbody>
+        <tr>
+          <th > Make</th>
+          <th> Sr Num</th>
+          <th> Slipring Sr Num</th>
+          <th> Cooling Fan1 Sr Num</th>
+          <th> Slipring Cooling Fan Sr Num</th>
+          <th>Status</th>
+        </tr>
+        <tr   *ngFor="let generator of gen_data_complete_list">
+          <td  > <a  (click)="getGeneratorById(generator.id)">{{generator.make}}</a></td>
+          <td >{{generator.sr_no}}</td>
+          <td >{{generator.generator_slipring_sr_number}}</td>
+          <td >{{generator.generator_cooling_fan1_sr_no}}</td>
+          <td >{{generator.generator_slipring_sr_number}}</td>
+          <td >{{generator.sname}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col-1"></div>
+  </div>
+  </div>
+  <br>
+
+</div>
